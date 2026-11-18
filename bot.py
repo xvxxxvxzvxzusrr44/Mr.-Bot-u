@@ -85,6 +85,20 @@ async def top(interaction: discord.Interaction):
 
     embed.description = description
     await interaction.response.send_message(embed=embed)
+from flask import Flask
+from threading import Thread
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_web():
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
+
+Thread(target=run_web).start()
 
 token = os.environ.get("DISCORD_TOKEN")
 if not token:
